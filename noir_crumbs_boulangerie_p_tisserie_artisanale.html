@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Noir Crumbs — Boulangerie & Pâtisserie Artisanale</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts : Playfair Display (éditorial artisanal) & Plus Jakarta Sans (lisibilité moderne) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream: '#FAF7F2',
+            sand: '#F3EDE4',
+            charcoal: '#141414',
+            charcoalLight: '#1E1E1E',
+            terracotta: '#C86D3B',
+            terracottaDark: '#A85528',
+            gold: '#D4A373',
+            goldLight: '#E6C29F',
+            ink: '#1C1917',
+            muted: '#6B655F'
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          },
+          boxShadow: {
+            'soft': '0 10px 40px -10px rgba(20, 20, 20, 0.08)',
+            'card': '0 4px 20px -2px rgba(20, 20, 20, 0.05)',
+            'float': '0 20px 50px rgba(20, 20, 20, 0.14)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #FAF7F2;
+      color: #1C1917;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes slideInRight {
+      from { transform: translateX(100%); }
+      to { transform: translateX(0); }
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fadeIn 0.25s ease-out forwards;
+    }
+    .animate-slide-right {
+      animation: slideInRight 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .animate-slide-up {
+      animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-terracotta selection:text-white">
+
+  <!-- ===================================================================== -->
+  <!-- BANDEAU SUPÉRIEUR (Inspiration Aroma & The Daily Knead)                -->
+  <!-- ===================================================================== -->
+  <div class="bg-charcoal text-cream text-xs py-2.5 px-4 text-center tracking-wide border-b border-white/10">
+    <span class="text-gold font-semibold">✦ FOURNÉE DU JOUR :</span> Pains au levain sortis du four à 6h00 • <span class="underline decoration-gold/60 underline-offset-2">Livraison offerte dès 25,00 €</span> d'achat
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- HEADER FIXE (Fusion Noir Crumbs + The Daily Knead + Aroma)            -->
+  <!-- ===================================================================== -->
+  <header class="sticky top-0 z-40 bg-cream/95 backdrop-blur-md border-b border-stone-200/80 transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20 gap-4">
+        
+        <!-- Bouton Menu Mobile + Logo -->
+        <div class="flex items-center gap-3">
+          <button id="mobile-menu-btn" aria-label="Ouvrir le menu" class="lg:hidden p-2.5 rounded-xl text-ink hover:bg-sand transition">
+            <i data-lucide="menu" class="w-6 h-6"></i>
+          </button>
+
+          <a href="#" class="flex items-center gap-3 group">
+            <div class="w-10 h-10 rounded-full bg-charcoal text-gold flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+              <i data-lucide="wheat" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <span class="font-serif text-xl sm:text-2xl font-bold tracking-tight text-charcoal block leading-none">Noir Crumbs</span>
+              <span class="text-[10px] uppercase tracking-[0.22em] text-muted font-semibold block mt-1">Boulangerie Artisanale</span>
+            </div>
+          </a>
+        </div>
+
+        <!-- Navigation Desktop -->
+        <nav class="hidden lg:flex items-center gap-7 text-sm font-medium text-ink/80">
+          <a href="#accueil" class="px-3.5 py-2 rounded-lg bg-charcoal text-white font-semibold transition">Accueil</a>
+          <a href="#catalogue" onclick="filterByCategory('Pains au Levain')" class="hover:text-terracotta transition">Nos Pains</a>
+          <a href="#catalogue" onclick="filterByCategory('Viennoiseries')" class="hover:text-terracotta transition">Viennoiseries</a>
+          <a href="#catalogue" onclick="filterByCategory('Pâtisseries & Tartes')" class="hover:text-terracotta transition">Pâtisseries</a>
+          <a href="#catalogue" onclick="filterByCategory('Gâteaux')" class="hover:text-terracotta transition">Gâteaux</a>
+          <a href="#histoire" class="hover:text-terracotta transition">À propos</a>
+          <a href="#horaires" class="hover:text-terracotta transition">Horaires</a>
+        </nav>
+
+        <!-- Actions & Recherche rapide -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <!-- Barre de recherche rapide desktop -->
+          <div class="hidden md:flex items-center bg-white border border-stone-200 rounded-full px-3.5 py-1.5 focus-within:border-charcoal transition w-48 lg:w-56">
+            <i data-lucide="search" class="w-4 h-4 text-muted mr-2 shrink-0"></i>
+            <input 
+              type="text" 
+              id="header-search-input"
+              placeholder="Rechercher un pain..." 
+              class="bg-transparent text-sm w-full focus:outline-none text-ink placeholder:text-muted/70"
+            />
+          </div>
+
+          <!-- Bouton Favoris -->
+          <button 
+            id="open-favorites-btn" 
+            aria-label="Mes favoris"
+            class="relative p-2.5 rounded-full bg-white border border-stone-200/90 text-ink hover:border-terracotta hover:text-terracotta transition shadow-2xs"
+          >
+            <i data-lucide="heart" class="w-5 h-5"></i>
+            <span id="favorites-badge" class="hidden absolute -top-1 -right-1 w-5 h-5 rounded-full bg-terracotta text-white text-[11px] font-bold flex items-center justify-center">0</span>
+          </button>
+
+          <!-- Bouton Panier -->
+          <button 
+            id="open-cart-btn" 
+            aria-label="Ouvrir le panier"
+            class="relative flex items-center gap-2 px-3.5 py-2.5 rounded-full bg-white border border-stone-200/90 text-ink hover:border-charcoal transition shadow-2xs"
+          >
+            <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+            <span id="cart-count-text" class="text-xs font-bold hidden sm:inline">(0)</span>
+            <span id="cart-badge" class="sm:hidden absolute -top-1 -right-1 w-5 h-5 rounded-full bg-charcoal text-gold text-[11px] font-bold flex items-center justify-center">0</span>
+          </button>
+
+          <!-- CTA Commander en ligne -->
+          <a 
+            href="#catalogue" 
+            class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-terracotta hover:bg-terracottaDark text-white text-sm font-semibold shadow-sm transition"
+          >
+            <span>Commander</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Menu Mobile Déroulant -->
+    <div id="mobile-menu" class="hidden lg:hidden bg-white border-b border-stone-200 px-4 pt-3 pb-6 space-y-4 animate-fade-in">
+      <div class="flex items-center bg-cream border border-stone-200 rounded-xl px-3.5 py-2.5">
+        <i data-lucide="search" class="w-4 h-4 text-muted mr-2"></i>
+        <input 
+          type="text" 
+          id="mobile-search-input"
+          placeholder="Rechercher croissants, levain, tarte..." 
+          class="bg-transparent text-sm w-full focus:outline-none"
+        />
+      </div>
+      <div class="grid grid-cols-2 gap-2 text-sm font-medium">
+        <a href="#accueil" class="mobile-nav-link p-3 rounded-xl bg-cream text-charcoal font-semibold">Accueil</a>
+        <a href="#catalogue" onclick="filterByCategory('Tout voir')" class="mobile-nav-link p-3 rounded-xl hover:bg-cream">Tout le Menu</a>
+        <a href="#catalogue" onclick="filterByCategory('Pains au Levain')" class="mobile-nav-link p-3 rounded-xl hover:bg-cream">Nos Pains</a>
+        <a href="#catalogue" onclick="filterByCategory('Viennoiseries')" class="mobile-nav-link p-3 rounded-xl hover:bg-cream">Viennoiseries</a>
+        <a href="#catalogue" onclick="filterByCategory('Pâtisseries & Tartes')" class="mobile-nav-link p-3 rounded-xl hover:bg-cream">Pâtisseries</a>
+        <a href="#catalogue" onclick="filterByCategory('Gâteaux')" class="mobile-nav-link p-3 rounded-xl hover:bg-cream">Gâteaux</a>
+        <a href="#histoire" class="mobile-nav-link p-3 rounded-xl hover:bg-cream">À propos</a>
+        <a href="#horaires" class="mobile-nav-link p-3 rounded-xl hover:bg-cream">Horaires & Accès</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================================================================== -->
+  <!-- SECTION HÉRO (Inspiration Noir Crumbs + The Daily Knead)              -->
+  <!-- ===================================================================== -->
+  <section id="accueil" class="relative pt-8 pb-16 sm:pt-12 sm:pb-24 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+        
+        <!-- Colonne Texte (Gauche) -->
+        <div class="lg:col-span-6 space-y-7 animate-slide-up">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-stone-200/80 shadow-2xs">
+            <span class="w-2 h-2 rounded-full bg-terracotta animate-pulse"></span>
+            <span class="text-xs font-semibold uppercase tracking-wider text-muted">Boulangerie Artisanale • Depuis 2015</span>
+          </div>
+
+          <h1 class="font-serif text-4xl sm:text-5xl lg:text-[3.5rem] font-bold text-charcoal leading-[1.12] tracking-tight">
+            Redefining <span class="italic font-normal text-terracotta">Bakery</span> For Everyday Life.
+          </h1>
+
+          <p class="text-base sm:text-lg text-muted leading-relaxed max-w-xl">
+            Experience the perfect blend of traditional craftmanship and modern innovation. Our artisan bakers create exceptional pastries, breads, and desserts using only the finest ingredients.
+          </p>
+
+          <!-- Boutons d'action -->
+          <div class="flex flex-wrap items-center gap-4 pt-1">
+            <a href="#catalogue" class="px-7 py-4 rounded-xl bg-charcoal hover:bg-stone-800 text-white font-semibold text-sm sm:text-base transition shadow-soft flex items-center gap-2.5">
+              <span>Explore Menu</span>
+              <i data-lucide="arrow-down-right" class="w-4 h-4 text-gold"></i>
+            </a>
+            <button onclick="openCart()" class="px-7 py-4 rounded-xl bg-white hover:bg-sand text-charcoal border border-stone-300 font-semibold text-sm sm:text-base transition flex items-center gap-2">
+              <span>Order Online</span>
+            </button>
+          </div>
+
+          <!-- Indicateurs clés de confiance (Inspiration Noir Crumbs) -->
+          <div class="grid grid-cols-3 gap-4 sm:gap-8 pt-6 border-t border-stone-200/90 max-w-lg">
+            <div>
+              <p class="font-serif text-2xl sm:text-3xl font-bold text-charcoal">500+</p>
+              <p class="text-xs sm:text-sm text-muted mt-0.5">Daily fresh items</p>
+            </div>
+            <div>
+              <p class="font-serif text-2xl sm:text-3xl font-bold text-charcoal">15k+</p>
+              <p class="text-xs sm:text-sm text-muted mt-0.5">Happy Customer</p>
+            </div>
+            <div>
+              <p class="font-serif text-2xl sm:text-3xl font-bold text-charcoal flex items-center gap-1">
+                4.9 <span class="text-amber-500 text-lg">★</span>
+              </p>
+              <p class="text-xs sm:text-sm text-muted mt-0.5">Average Rating</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Colonne Visuelle (Droite) -->
+        <div class="lg:col-span-6 relative">
+          <div class="relative rounded-3xl overflow-hidden shadow-float aspect-[4/4.3] bg-stone-200">
+            <img 
+              src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1200&q=85" 
+              onerror="this.src='https://placehold.co/800x850/141414/D4A373?text=Noir+Crumbs+Artisan'"
+              alt="Assortiment de pains au levain et croissants artisanaux dorés" 
+              class="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-700"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+            
+            <!-- Bouton favori rapide sur l'image héro -->
+            <button 
+              onclick="toggleFavorite(1)" 
+              aria-label="Ajouter le pain signature aux favoris"
+              class="absolute top-5 right-5 w-11 h-11 rounded-full bg-white/95 backdrop-blur-sm shadow-md flex items-center justify-center text-terracotta hover:scale-110 transition"
+            >
+              <i data-lucide="heart" class="w-5 h-5 fill-terracotta"></i>
+            </button>
+          </div>
+
+          <!-- Badge flottant "Fresh Daily" (Inspiration Noir Crumbs) -->
+          <div class="absolute -bottom-5 left-4 sm:-left-6 bg-white rounded-2xl p-4 sm:p-5 shadow-float border border-stone-100 flex items-center gap-4 max-w-xs">
+            <div class="w-11 h-11 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+              <i data-lucide="check-circle-2" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <p class="text-sm font-bold text-charcoal">Fresh Daily</p>
+              <p class="text-xs text-muted mt-0.5">Baked every morning</p>
+            </div>
+          </div>
+
+          <!-- Mini carte produit vedette flottante en haut à gauche sur desktop -->
+          <div class="hidden sm:flex absolute top-6 -left-6 bg-charcoal text-cream rounded-2xl p-3.5 shadow-float border border-white/10 items-center gap-3">
+            <img 
+              src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=200&q=80" 
+              alt="Croissant pur beurre"
+              class="w-12 h-12 rounded-xl object-cover"
+            />
+            <div class="pr-2">
+              <span class="text-[10px] uppercase tracking-wider text-gold font-semibold">Coup de cœur</span>
+              <p class="text-xs font-bold">Croissant Chocolat-Noisette</p>
+              <p class="text-xs text-gold mt-0.5">3,80 €</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!-- CATALOGUE INTERACTIF & FILTRES (Fusion Aroma + Noir Crumbs + Knead)   -->
+  <!-- ===================================================================== -->
+  <section id="catalogue" class="py-16 sm:py-24 bg-white border-y border-stone-200/70">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- En-tête de section -->
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <span class="text-xs font-bold uppercase tracking-[0.2em] text-terracotta">Featured Collection</span>
+        <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-charcoal mt-2">
+          Our Artisan Selection
+        </h2>
+        <p class="text-muted text-sm sm:text-base mt-3">
+          A curated collection of our finest breads and pastries, baked fresh daily with authentic flavors and timeless techniques.
+        </p>
+      </div>
+
+      <!-- Barre de Contrôle : Onglets Pilules (Aroma) + Recherche + Tri -->
+      <div class="bg-charcoal rounded-3xl p-4 sm:p-6 mb-10 shadow-soft">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-5">
+          
+          <!-- Pilules de catégories inspirées d'Aroma (contours dorés) -->
+          <div id="category-pills" class="flex items-center gap-2.5 overflow-x-auto no-scrollbar pb-1 lg:pb-0">
+            <!-- Généré dynamiquement par JS -->
+          </div>
+
+          <!-- Recherche & Menu déroulant de tri -->
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+            <!-- Recherche dans le catalogue -->
+            <div class="relative flex-1 sm:w-60">
+              <i data-lucide="search" class="w-4 h-4 text-gold/80 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+              <input 
+                type="text" 
+                id="catalog-search-input"
+                placeholder="Ingrédient, nom..." 
+                class="w-full pl-10 pr-4 py-2.5 rounded-full bg-charcoalLight border border-gold/30 text-cream placeholder:text-stone-400 text-sm focus:outline-none focus:border-gold transition"
+              />
+            </div>
+
+            <!-- Tri fonctionnel -->
+            <div class="relative">
+              <select 
+                id="sort-select" 
+                aria-label="Trier les produits"
+                class="appearance-none w-full sm:w-auto pl-4 pr-10 py-2.5 rounded-full bg-white text-charcoal font-semibold text-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-gold"
+              >
+                <option value="popular">⇅ Populaires</option>
+                <option value="alpha">⇅ Alphabétique (A–Z)</option>
+                <option value="price-asc">⇅ Prix croissant</option>
+                <option value="price-desc">⇅ Prix décroissant</option>
+              </select>
+              <i data-lucide="chevron-down" class="w-4 h-4 text-charcoal absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Compteur de résultats & réinitialisation si filtre actif -->
+      <div class="flex items-center justify-between mb-6 text-sm text-muted">
+        <p id="results-counter">Affichage de <strong class="text-charcoal">9</strong> créations artisanales</p>
+        <button id="reset-filters-btn" onclick="resetFilters()" class="hidden text-terracotta font-semibold hover:underline flex items-center gap-1">
+          <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+          <span>Réinitialiser les filtres</span>
+        </button>
+      </div>
+
+      <!-- Grille de Produits -->
+      <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+        <!-- Cartes produits injectées dynamiquement -->
+      </div>
+
+      <!-- État vide si aucun résultat -->
+      <div id="empty-state" class="hidden text-center py-16 px-4 bg-cream rounded-3xl border border-stone-200/80">
+        <div class="w-14 h-14 rounded-full bg-sand text-terracotta flex items-center justify-center mx-auto mb-4">
+          <i data-lucide="search-x" class="w-7 h-7"></i>
+        </div>
+        <h3 class="font-serif text-2xl font-bold text-charcoal">Aucune création trouvée</h3>
+        <p class="text-muted text-sm mt-2 max-w-md mx-auto">
+          Nous n’avons trouvé aucun produit correspondant à votre recherche. Essayez un autre mot-clé ou parcourez toute notre carte.
+        </p>
+        <button onclick="resetFilters()" class="mt-6 px-6 py-3 rounded-full bg-charcoal text-white text-sm font-semibold hover:bg-stone-800 transition">
+          Voir tout le catalogue
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!-- SECTION NOTRE HISTOIRE & SAVOIR-FAIRE (Inspiration Bun Bakery & Aroma)-->
+  <!-- ===================================================================== -->
+  <section id="histoire" class="py-20 sm:py-28 bg-charcoal text-cream relative overflow-hidden">
+    <div class="absolute top-0 right-0 w-96 h-96 bg-terracotta/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
+    <div class="absolute bottom-0 left-0 w-96 h-96 bg-gold/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/3 pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        
+        <!-- Texte Storytelling (Gauche) -->
+        <div class="lg:col-span-6 space-y-6">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-gold/40 bg-white/5 text-gold text-xs font-semibold uppercase tracking-widest">
+            <span>Our Heritage & Craft</span>
+          </div>
+
+          <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight text-white">
+            Art Meets Passion in Every <span class="italic font-normal text-gold">Story of Taste</span>.
+          </h2>
+
+          <p class="text-stone-300 text-base sm:text-lg leading-relaxed">
+            Chez <strong class="text-white">Noir Crumbs</strong>, nous croyons que le vrai pain ne se presse pas. Chaque miche repose pendant plus de 24 heures en fermentation lente afin de développer des arômes complexes, une croûte caramélisée croustillante et une mie alvéolée d’une digestibilité incomparable.
+          </p>
+
+          <p class="text-stone-400 text-sm sm:text-base leading-relaxed">
+            Nous sélectionnons exclusivement des farines biologiques moulues sur meule de pierre auprès de meuniers partenaires locaux, du beurre AOP Charentes-Poitou pour nos feuilletages et du chocolat grand cru pour nos créations pâtissières.
+          </p>
+
+          <!-- Points forts artisanaux -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+            <div class="p-4 rounded-2xl bg-white/5 border border-white/10">
+              <p class="font-serif text-lg font-semibold text-gold">24h Fermentation</p>
+              <p class="text-xs text-stone-400 mt-1">Levain chef entretenu depuis 2015, sans aucun additif.</p>
+            </div>
+            <div class="p-4 rounded-2xl bg-white/5 border border-white/10">
+              <p class="font-serif text-lg font-semibold text-gold">Organic Stoneground</p>
+              <p class="text-xs text-stone-400 mt-1">Blés anciens, seigle et épeautre issus de circuits courts.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Grille visuelle de 4 photos artisanales -->
+        <div class="lg:col-span-6">
+          <div class="grid grid-cols-2 gap-4 sm:gap-5">
+            <div class="space-y-4 sm:space-y-5">
+              <div class="rounded-2xl overflow-hidden aspect-[4/4.5] border border-white/10 shadow-lg">
+                <img 
+                  src="https://images.unsplash.com/photo-1586444248902-2f64eddc13df?auto=format&fit=crop&w=700&q=80" 
+                  onerror="this.src='https://placehold.co/500x550/1E1E1E/D4A373?text=Pain+au+Levain'"
+                  alt="Pain au levain tranché" 
+                  class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <div class="rounded-2xl overflow-hidden aspect-[4/3.2] border border-white/10 shadow-lg">
+                <img 
+                  src="https://images.unsplash.com/photo-1517433670267-08bbd4be890f?auto=format&fit=crop&w=700&q=80" 
+                  onerror="this.src='https://placehold.co/500x400/1E1E1E/D4A373?text=P%C3%A9trissage'"
+                  alt="Pétrissage artisanal de la pâte" 
+                  class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+            </div>
+            <div class="space-y-4 sm:space-y-5 pt-6 sm:pt-10">
+              <div class="rounded-2xl overflow-hidden aspect-[4/3.2] border border-white/10 shadow-lg">
+                <img 
+                  src="https://images.unsplash.com/photo-1550617931-e17a7b70dce2?auto=format&fit=crop&w=700&q=80" 
+                  onerror="this.src='https://placehold.co/500x400/1E1E1E/D4A373?text=P%C3%A2tisseries'"
+                  alt="Pâtisseries artisanales au chocolat" 
+                  class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <div class="rounded-2xl overflow-hidden aspect-[4/4.5] border border-white/10 shadow-lg">
+                <img 
+                  src="https://images.unsplash.com/photo-1530610476181-d83430b64dcd?auto=format&fit=crop&w=700&q=80" 
+                  onerror="this.src='https://placehold.co/500x550/1E1E1E/D4A373?text=Viennoiseries'"
+                  alt="Viennoiseries dorées à la sortie du four" 
+                  class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!-- SECTION ENGAGEMENTS, HORAIRES & NEWSLETTER (Noir Crumbs & Bun Bakery) -->
+  <!-- ===================================================================== -->
+  <section id="horaires" class="py-16 sm:py-24 bg-cream">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+      
+      <!-- 3 Cartes de Garanties -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white rounded-2xl p-7 border border-stone-200/80 shadow-card flex items-start gap-4">
+          <div class="w-12 h-12 rounded-xl bg-sand text-terracotta flex items-center justify-center shrink-0">
+            <i data-lucide="truck" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <h3 class="font-serif text-lg font-bold text-charcoal">Free Delivery</h3>
+            <p class="text-sm text-muted mt-1 leading-relaxed">
+              Orders over $50. Doorstep delivery right to your home or office.
+            </p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-7 border border-stone-200/80 shadow-card flex items-start gap-4">
+          <div class="w-12 h-12 rounded-xl bg-sand text-terracotta flex items-center justify-center shrink-0">
+            <i data-lucide="flame" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <h3 class="font-serif text-lg font-bold text-charcoal">Fresh Daily</h3>
+            <p class="text-sm text-muted mt-1 leading-relaxed">
+              Baked every morning starting at 5:00 AM using traditional stone ovens.
+            </p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-7 border border-stone-200/80 shadow-card flex items-start gap-4">
+          <div class="w-12 h-12 rounded-xl bg-sand text-terracotta flex items-center justify-center shrink-0">
+            <i data-lucide="award" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <h3 class="font-serif text-lg font-bold text-charcoal">Award Winning</h3>
+            <p class="text-sm text-muted mt-1 leading-relaxed">
+              Recognized for the excellence of our signature sourdough and butter croissants.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bloc Horaires d'Ouverture + Newsletter -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        
+        <!-- Encart Horaires d'ouverture -->
+        <div class="lg:col-span-5 bg-charcoal text-cream rounded-3xl p-8 sm:p-10 shadow-soft flex flex-col justify-between border border-white/10">
+          <div>
+            <div class="flex items-center justify-between mb-6">
+              <h3 class="font-serif text-2xl sm:text-3xl font-bold text-gold">Opening Hours</h3>
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-400 text-xs font-semibold">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                Open Now
+              </span>
+            </div>
+
+            <div class="space-y-4 text-sm sm:text-base">
+              <div class="flex items-center justify-between py-3 border-b border-dashed border-white/15">
+                <span class="text-stone-300">Mon – Thu</span>
+                <span class="font-semibold text-white">07:00 AM – 08:00 PM</span>
+              </div>
+              <div class="flex items-center justify-between py-3 border-b border-dashed border-white/15">
+                <span class="text-stone-300">Fri – Sat</span>
+                <span class="font-semibold text-white">07:00 AM – 10:00 PM</span>
+              </div>
+              <div class="flex items-center justify-between py-3 border-b border-dashed border-white/15">
+                <span class="text-stone-300">Sunday</span>
+                <span class="font-semibold text-gold">08:00 AM – 02:00 PM</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 pt-6 border-t border-white/10 flex items-start gap-3 text-xs sm:text-sm text-stone-400">
+            <i data-lucide="map-pin" class="w-5 h-5 text-gold shrink-0 mt-0.5"></i>
+            <div>
+              <p class="text-white font-semibold">14 Artisan Street, Saint-Germain District</p>
+              <p class="mt-0.5">Custom orders & events : +33 (0)1 42 68 55 10</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Encart Newsletter -->
+        <div class="lg:col-span-7 bg-white rounded-3xl p-8 sm:p-10 border border-stone-200/80 shadow-card flex flex-col justify-center">
+          <div class="max-w-xl">
+            <span class="text-xs font-bold uppercase tracking-widest text-terracotta">Sign Up for Our Newsletter</span>
+            <h3 class="font-serif text-2xl sm:text-3xl font-bold text-charcoal mt-2">
+              Stay Connected & Step Into Style
+            </h3>
+            <p class="text-muted text-sm sm:text-base mt-3 leading-relaxed">
+              Get the latest updates on new treats, special offers, and the latest from our kitchen delivered straight to your inbox.
+            </p>
+
+            <form id="newsletter-form" class="mt-6 flex flex-col sm:flex-row gap-3">
+              <input 
+                type="email" 
+                id="newsletter-email"
+                required
+                placeholder="Enter your email..." 
+                class="flex-1 px-5 py-3.5 rounded-xl bg-cream border border-stone-200 text-ink text-sm focus:outline-none focus:border-charcoal transition"
+              />
+              <button 
+                type="submit" 
+                class="px-7 py-3.5 rounded-xl bg-charcoal hover:bg-stone-800 text-white font-semibold text-sm transition shrink-0"
+              >
+                Sign Up
+              </button>
+            </form>
+
+            <div id="newsletter-feedback" class="hidden mt-4 p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm flex items-center gap-2.5">
+              <i data-lucide="check-circle" class="w-5 h-5 text-emerald-600 shrink-0"></i>
+              <span>Thank you! Use code <strong>BIENVENUE10</strong> for your first order.</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!-- PIED DE PAGE (Footer)                                                 -->
+  <!-- ===================================================================== -->
+  <footer class="bg-charcoal text-stone-300 pt-16 pb-10 border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-white/10">
+        
+        <!-- Marque -->
+        <div class="space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-full bg-gold/15 text-gold flex items-center justify-center">
+              <i data-lucide="wheat" class="w-5 h-5"></i>
+            </div>
+            <span class="font-serif text-2xl font-bold text-white">Noir Crumbs</span>
+          </div>
+          <p class="text-sm text-stone-400 leading-relaxed">
+            Artisanal bakery and patisserie dedicated to natural sourdough, organic stoneground flour, and authentic homemade taste.
+          </p>
+        </div>
+
+        <!-- Navigation -->
+        <div>
+          <h4 class="text-white font-semibold text-sm uppercase tracking-wider mb-4">Navigation</h4>
+          <ul class="space-y-2.5 text-sm text-stone-400">
+            <li><a href="#accueil" class="hover:text-gold transition">Home</a></li>
+            <li><a href="#catalogue" class="hover:text-gold transition">Menu</a></li>
+            <li><a href="#histoire" class="hover:text-gold transition">About Us</a></li>
+            <li><a href="#horaires" class="hover:text-gold transition">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Catégories -->
+        <div>
+          <h4 class="text-white font-semibold text-sm uppercase tracking-wider mb-4">Specialties</h4>
+          <ul class="space-y-2.5 text-sm text-stone-400">
+            <li><a href="#catalogue" onclick="filterByCategory('Pains au Levain')" class="hover:text-gold transition">Artisan Sourdough</a></li>
+            <li><a href="#catalogue" onclick="filterByCategory('Viennoiseries')" class="hover:text-gold transition">Butter Croissants</a></li>
+            <li><a href="#catalogue" onclick="filterByCategory('Pâtisseries & Tartes')" class="hover:text-gold transition">Pastries & Tarts</a></li>
+            <li><a href="#catalogue" onclick="filterByCategory('Gâteaux')" class="hover:text-gold transition">Cakes & Breads</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact & Réseaux -->
+        <div>
+          <h4 class="text-white font-semibold text-sm uppercase tracking-wider mb-4">Connect</h4>
+          <ul class="space-y-2.5 text-sm text-stone-400">
+            <li>14 Artisan Street, Paris</li>
+            <li>hello@noircrumbs.com</li>
+            <li>+33 (0)1 42 68 55 10</li>
+          </ul>
+          <div class="flex items-center gap-3 mt-5">
+            <a href="#accueil" aria-label="Instagram" class="w-9 h-9 rounded-full bg-white/10 hover:bg-gold hover:text-charcoal flex items-center justify-center transition">
+              <i data-lucide="instagram" class="w-4 h-4"></i>
+            </a>
+            <a href="#accueil" aria-label="Facebook" class="w-9 h-9 rounded-full bg-white/10 hover:bg-gold hover:text-charcoal flex items-center justify-center transition">
+              <i data-lucide="facebook" class="w-4 h-4"></i>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-stone-500">
+        <p>© 2026 Noir Crumbs — Artisanal Bakery. All rights reserved.</p>
+        <div class="flex items-center gap-6">
+          <a href="#accueil" class="hover:text-stone-300 transition">Terms & Conditions</a>
+          <a href="#accueil" class="hover:text-stone-300 transition">Privacy Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================================================================== -->
+  <!-- TIROIR PANIER LATÉRAL (Slide-over Cart & Tunnel de Commande)           -->
+  <!-- ===================================================================== -->
+  <div id="cart-drawer" class="fixed inset-0 z-50 hidden">
+    <div id="cart-backdrop" onclick="closeCart()" class="absolute inset-0 bg-black/60 backdrop-blur-xs animate-fade-in"></div>
+    
+    <div class="absolute inset-y-0 right-0 w-full max-w-md bg-white shadow-2xl flex flex-col animate-slide-right">
+      
+      <!-- En-tête Panier -->
+      <div class="px-6 py-5 border-b border-stone-200 flex items-center justify-between bg-cream">
+        <div class="flex items-center gap-2.5">
+          <i data-lucide="shopping-bag" class="w-5 h-5 text-terracotta"></i>
+          <h3 class="font-serif text-xl font-bold text-charcoal">Your Cart</h3>
+          <span id="drawer-item-count" class="px-2.5 py-0.5 rounded-full bg-charcoal text-gold text-xs font-bold">0</span>
+        </div>
+        <button onclick="closeCart()" aria-label="Fermer le panier" class="p-2 rounded-full hover:bg-stone-200/70 text-ink transition">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Barre de progression livraison gratuite -->
+      <div class="px-6 py-3 bg-sand/70 border-b border-stone-200/70">
+        <p id="free-shipping-msg" class="text-xs font-medium text-charcoal mb-1.5">
+          Plus que <strong>25,00 €</strong> pour bénéficier de la livraison offerte !
+        </p>
+        <div class="w-full h-1.5 bg-stone-200 rounded-full overflow-hidden">
+          <div id="free-shipping-bar" class="h-full bg-terracotta transition-all duration-300" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <!-- Liste des articles du panier -->
+      <div id="cart-items-container" class="flex-1 overflow-y-auto p-6 space-y-4">
+        <!-- Contenu injecté par JS -->
+      </div>
+
+      <!-- Pied du panier -->
+      <div id="cart-footer" class="p-6 bg-cream border-t border-stone-200 space-y-4">
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-muted mb-2">Delivery Mode</label>
+          <div class="grid grid-cols-2 gap-2 p-1 bg-stone-200/70 rounded-xl">
+            <button 
+              type="button"
+              id="mode-pickup-btn" 
+              onclick="setDeliveryMode('pickup')" 
+              class="py-2 px-3 rounded-lg text-xs font-bold bg-white text-charcoal shadow-2xs transition flex items-center justify-center gap-1.5"
+            >
+              <i data-lucide="store" class="w-3.5 h-3.5 text-terracotta"></i>
+              <span>Click & Collect</span>
+            </button>
+            <button 
+              type="button"
+              id="mode-delivery-btn" 
+              onclick="setDeliveryMode('delivery')" 
+              class="py-2 px-3 rounded-lg text-xs font-semibold text-muted hover:text-charcoal transition flex items-center justify-center gap-1.5"
+            >
+              <i data-lucide="bike" class="w-3.5 h-3.5"></i>
+              <span>Delivery</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="space-y-1.5 text-sm pt-1">
+          <div class="flex justify-between text-muted">
+            <span>Subtotal</span>
+            <span id="cart-subtotal" class="font-medium text-charcoal">0,00 €</span>
+          </div>
+          <div class="flex justify-between text-muted">
+            <span id="shipping-label">In-store pickup</span>
+            <span id="cart-shipping" class="font-medium text-emerald-700">Free</span>
+          </div>
+          <div class="flex justify-between text-base font-bold text-charcoal pt-2 border-t border-stone-200">
+            <span>Total TTC</span>
+            <span id="cart-total" class="font-serif text-xl text-terracotta">0,00 €</span>
+          </div>
+        </div>
+
+        <button 
+          id="checkout-btn"
+          onclick="openCheckoutModal()" 
+          class="w-full py-3.5 px-6 rounded-xl bg-charcoal hover:bg-stone-800 disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold text-sm transition shadow-soft flex items-center justify-center gap-2"
+        >
+          <span>Proceed to Checkout</span>
+          <i data-lucide="arrow-right" class="w-4 h-4 text-gold"></i>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODALE MES FAVORIS                                                    -->
+  <!-- ===================================================================== -->
+  <div id="favorites-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+    <div onclick="closeFavorites()" class="absolute inset-0 bg-black/60 backdrop-blur-xs animate-fade-in"></div>
+    <div class="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl overflow-hidden animate-slide-up">
+      <div class="px-6 py-5 bg-cream border-b border-stone-200 flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <i data-lucide="heart" class="w-5 h-5 text-terracotta fill-terracotta"></i>
+          <h3 class="font-serif text-xl font-bold text-charcoal">Your Favorite Creations</h3>
+        </div>
+        <button onclick="closeFavorites()" class="p-2 rounded-full hover:bg-stone-200/70 transition">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div id="favorites-list" class="p-6 max-h-[65vh] overflow-y-auto space-y-3">
+        <!-- Favoris injectés par JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODALE FINALISATION DE COMMANDE                                       -->
+  <!-- ===================================================================== -->
+  <div id="checkout-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+    <div onclick="closeCheckoutModal()" class="absolute inset-0 bg-black/65 backdrop-blur-xs animate-fade-in"></div>
+    <div class="relative w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden animate-slide-up">
+      
+      <div id="checkout-form-step">
+        <div class="px-6 py-5 bg-charcoal text-cream flex items-center justify-between">
+          <div>
+            <span class="text-[11px] uppercase tracking-widest text-gold font-semibold">Checkout</span>
+            <h3 class="font-serif text-xl font-bold">Your Artisan Order</h3>
+          </div>
+          <button onclick="closeCheckoutModal()" class="p-2 rounded-full hover:bg-white/10 transition">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <form id="checkout-form" class="p-6 space-y-4">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-muted mb-1.5">Full Name *</label>
+            <input type="text" id="customer-name" required placeholder="Camille Laurent" class="w-full px-4 py-2.5 rounded-xl bg-cream border border-stone-200 text-sm focus:outline-none focus:border-charcoal" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-muted mb-1.5">Phone Number *</label>
+            <input type="tel" id="customer-phone" required placeholder="06 12 34 56 78" class="w-full px-4 py-2.5 rounded-xl bg-cream border border-stone-200 text-sm focus:outline-none focus:border-charcoal" />
+          </div>
+          <div id="delivery-address-field" class="hidden">
+            <label class="block text-xs font-bold uppercase tracking-wider text-muted mb-1.5">Delivery Address *</label>
+            <input type="text" id="customer-address" placeholder="14 Artisan Street, Apt 4B" class="w-full px-4 py-2.5 rounded-xl bg-cream border border-stone-200 text-sm focus:outline-none focus:border-charcoal" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-muted mb-1.5">Pickup / Delivery Slot</label>
+            <select id="pickup-slot" class="w-full px-4 py-2.5 rounded-xl bg-cream border border-stone-200 text-sm focus:outline-none focus:border-charcoal">
+              <option>As soon as possible (approx. 25 min)</option>
+              <option>Tomorrow morning — 07:30 to 09:00</option>
+              <option>Tomorrow noon — 12:00 to 01:30</option>
+              <option>Tomorrow evening — 05:00 to 07:00</option>
+            </select>
+          </div>
+
+          <div class="p-3.5 rounded-xl bg-sand/80 flex items-center justify-between text-sm">
+            <span class="font-medium text-charcoal">Total Amount:</span>
+            <span id="modal-total-amount" class="font-serif text-lg font-bold text-terracotta">0,00 €</span>
+          </div>
+
+          <button type="submit" class="w-full py-3.5 rounded-xl bg-terracotta hover:bg-terracottaDark text-white font-semibold text-sm transition shadow-md">
+            Confirm Order
+          </button>
+        </form>
+      </div>
+
+      <div id="checkout-success-step" class="hidden p-8 text-center space-y-5">
+        <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
+          <i data-lucide="check" class="w-8 h-8"></i>
+        </div>
+        <div>
+          <span class="text-xs font-bold uppercase tracking-widest text-terracotta">Order #NC-8492</span>
+          <h3 class="font-serif text-2xl font-bold text-charcoal mt-1">Thank you for your order!</h3>
+          <p id="confirmation-details" class="text-sm text-muted mt-2 leading-relaxed">
+            Our bakers are preparing your selection with care.
+          </p>
+        </div>
+        <button onclick="finishOrderAndReset()" class="w-full py-3.5 rounded-xl bg-charcoal text-white font-semibold text-sm hover:bg-stone-800 transition">
+          Continue Browsing
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- NOTIFICATION TOAST FLOTTANTE                                          -->
+  <!-- ===================================================================== -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- ===================================================================== -->
+  <!-- SCRIPT JAVASCRIPT COMPLET                                             -->
+  <!-- ===================================================================== -->
+  <script>
+    const PRODUCTS = [
+      {
+        id: 1,
+        name: "Artisan Sourdough",
+        category: "Pains au Levain",
+        price: 6.50,
+        oldPrice: null,
+        rating: "4.9",
+        popularRank: 1,
+        badge: "Signature",
+        description: "Slow-fermented bread with a crisp crust and soft airy center. Naturally leavened and baked fresh daily.",
+        ingredients: "organic flour, natural sourdough starter, spring water, Guerande salt",
+        image: "https://images.unsplash.com/photo-1585478259715-876acc5be8eb?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: 2,
+        name: "Chocolate Croissant",
+        category: "Viennoiseries",
+        price: 3.80,
+        oldPrice: 4.50,
+        rating: "4.9",
+        popularRank: 2,
+        badge: "Best-seller",
+        description: "Flaky buttery layers filled with rich dark chocolate 75% and roasted hazelnut bits.",
+        ingredients: "AOP butter, dark chocolate, Piemont hazelnuts, T55 flour",
+        image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: 3,
+        name: "Almond Croissant",
+        category: "Viennoiseries",
+        price: 4.20,
+        oldPrice: null,
+        rating: "4.9",
+        popularRank: 3,
+        badge: null,
+        description: "Twice-baked buttery croissant filled with rich almond frangipane cream and topped with sliced toasted almonds.",
+        ingredients: "sliced almonds, frangipane cream, AOP butter, powdered sugar",
+        image: "https://images.unsplash.com/photo-1623334044303-241021148842?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: 4,
+        name: "Blueberry Danish",
+        category: "Pâtisseries & Tartes",
+        price: 4.50,
+        oldPrice: null,
+        rating: "4.8",
+        popularRank: 5,
+        badge: "Seasonal",
+        description: "Sweet berries, vanilla glaze and crispy flaky pastry baked to golden perfection.",
+        ingredients: "wild blueberries, Madagascar vanilla, flaky pastry dough",
+        image: "https://images.unsplash.com/photo-1509365465985-25d11c17e812?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: 5,
+        name: "Morning Buns",
+        category: "Viennoiseries",
+        price: 3.90,
+        oldPrice: null,
+        rating: "4.9",
+        popularRank: 4,
+        badge: null,
+        description: "Cinnamon, sugar, spiced butter rolled into sweet brioche dough with a caramelized crust.",
+        ingredients: "Ceylon cinnamon, muscovado sugar, salted butter, brioche",
+        image: "https://images.unsplash.com/photo-1509365390695-33aee754301f?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: 6,
+        name: "Lemon Tart",
+        category: "Pâtisseries & Tartes",
+        price: 5.50,
+        oldPrice: 6.20,
+        rating: "4.9",
+        popularRank: 6,
+        badge: "Staff Pick",
+        description: "Tangy lemon filling in a crisp golden pastry shell topped with toasted Italian meringue.",
+        ingredients: "Menton lemons, shortcrust pastry, Italian meringue, fresh butter",
+        image: "https://images.unsplash.com/photo-1519915028121-7d3463d20b13?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: 7,
+        name: "Blueberry Scones",
+        category: "Pâtisseries & Tartes",
+        price: 3.60,
+        oldPrice: null,
+        rating: "4.8",
+        popularRank: 8,
+        badge: null,
+        description: "Soft buttery scones loaded with fresh blueberries, lemon zest and sweet cream glaze.",
+        ingredients: "blueberries, fresh cream, organic flour, lemon zest",
+        image: "https://images.unsplash.com/photo-1587241321921-91a834d6d191?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: 8,
+        name: "Chokladkaka Dark Cake",
+        category: "Gâteaux",
+        price: 6.20,
+        oldPrice: null,
+        rating: "5.0",
+        popularRank: 7,
+        badge: "Special",
+        description: "Rich dark chocolate cake with a gooey melt-in-your-mouth center and velvety cocoa ganache.",
+        ingredients: "75% dark chocolate, pure cocoa, farm butter, sea salt",
+        image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: 9,
+        name: "Classic Gold Bagels",
+        category: "Pains au Levain",
+        price: 3.20,
+        oldPrice: null,
+        rating: "4.8",
+        popularRank: 9,
+        badge: "Fresh Baked",
+        description: "Traditional kettle-boiled and stone-baked bagels with golden sesame and poppy seed topping.",
+        ingredients: "golden sesame, poppy seeds, high-gluten wheat flour, malt",
+        image: "https://images.unsplash.com/photo-1627308595229-7830a5c91f9f?auto=format&fit=crop&w=800&q=80"
+      }
+    ];
+
+    const CATEGORIES = [
+      "Tout voir",
+      "Pains au Levain",
+      "Viennoiseries",
+      "Pâtisseries & Tartes",
+      "Gâteaux"
+    ];
+
+    let state = {
+      selectedCategory: "Tout voir",
+      searchQuery: "",
+      sortBy: "popular",
+      cart: [],
+      favorites: [1, 2],
+      cardQuantities: {},
+      deliveryMode: "pickup"
+    };
+
+    PRODUCTS.forEach(p => {
+      state.cardQuantities[p.id] = 1;
+    });
+
+    function formatPrice(value) {
+      return value.toFixed(2).replace('.', ',') + ' €';
+    }
+
+    function renderCategoryPills() {
+      const container = document.getElementById('category-pills');
+      container.innerHTML = CATEGORIES.map(cat => {
+        const isActive = state.selectedCategory === cat;
+        return `
+          <button
+            onclick="filterByCategory('${cat.replace(/'/g, "\\'")}')"
+            class="px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold uppercase tracking-wider whitespace-nowrap transition-all border ${
+              isActive 
+                ? 'bg-gold text-charcoal border-gold shadow-sm' 
+                : 'bg-transparent text-cream border-gold/50 hover:border-gold hover:text-gold'
+            }"
+          >
+            ${cat}
+          </button>
+        `;
+      }).join('');
+    }
+
+    function getFilteredProducts() {
+      let filtered = PRODUCTS.filter(product => {
+        const matchesCategory = state.selectedCategory === "Tout voir" || product.category === state.selectedCategory;
+        const query = state.searchQuery.trim().toLowerCase();
+        const matchesSearch = !query || 
+          product.name.toLowerCase().includes(query) || 
+          product.description.toLowerCase().includes(query) ||
+          product.ingredients.toLowerCase().includes(query) ||
+          product.category.toLowerCase().includes(query);
+        return matchesCategory && matchesSearch;
+      });
+
+      if (state.sortBy === "alpha") {
+        filtered.sort((a, b) => a.name.localeCompare(b.name, 'fr'));
+      } else if (state.sortBy === "price-asc") {
+        filtered.sort((a, b) => a.price - b.price);
+      } else if (state.sortBy === "price-desc") {
+        filtered.sort((a, b) => b.price - a.price);
+      } else {
+        filtered.sort((a, b) => a.popularRank - b.popularRank);
+      }
+
+      return filtered;
+    }
+
+    function renderProducts() {
+      const grid = document.getElementById('products-grid');
+      const emptyState = document.getElementById('empty-state');
+      const counter = document.getElementById('results-counter');
+      const resetBtn = document.getElementById('reset-filters-btn');
+
+      const products = getFilteredProducts();
+
+      counter.innerHTML = `Affichage de <strong class="text-charcoal">${products.length}</strong> création${products.length > 1 ? 's' : ''} artisanale${products.length > 1 ? 's' : ''}`;
+      if (state.selectedCategory !== "Tout voir" || state.searchQuery.trim() !== "") {
+        resetBtn.classList.remove('hidden');
+      } else {
+        resetBtn.classList.add('hidden');
+      }
+
+      if (products.length === 0) {
+        grid.innerHTML = "";
+        emptyState.classList.remove('hidden');
+        lucide.createIcons();
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+
+      grid.innerHTML = products.map(product => {
+        const isFav = state.favorites.includes(product.id);
+        const qty = state.cardQuantities[product.id] || 1;
+
+        return `
+          <article class="group bg-cream/60 hover:bg-white rounded-3xl border border-stone-200/80 hover:border-stone-300 shadow-card hover:shadow-soft transition-all duration-300 flex flex-col overflow-hidden">
+            <div class="relative aspect-[4/3.4] overflow-hidden bg-stone-200">
+              <img 
+                src="${product.image}" 
+                onerror="this.src='https://placehold.co/600x500/F3EDE4/141414?text=${encodeURIComponent(product.name)}'"
+                alt="${product.name}" 
+                class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+              />
+              
+              <div class="absolute top-3.5 left-3.5 px-3 py-1 rounded-full bg-white/95 backdrop-blur-xs shadow-xs flex items-center gap-1 text-xs font-bold text-charcoal">
+                <span class="text-amber-500">★</span>
+                <span>${product.rating}/5</span>
+              </div>
+
+              ${product.badge ? `
+                <div class="absolute bottom-3.5 left-3.5 px-3 py-1 rounded-full bg-charcoal/90 text-gold text-[11px] font-semibold tracking-wide">
+                  ${product.badge}
+                </div>
+              ` : ''}
+
+              <button 
+                onclick="toggleFavorite(${product.id})"
+                aria-label="Ajouter aux favoris"
+                class="absolute top-3.5 right-3.5 w-10 h-10 rounded-full bg-white/95 backdrop-blur-xs shadow-xs flex items-center justify-center transition-transform hover:scale-110 ${
+                  isFav ? 'text-terracotta' : 'text-stone-400 hover:text-terracotta'
+                }"
+              >
+                <i data-lucide="heart" class="w-4 h-4 ${isFav ? 'fill-terracotta' : ''}"></i>
+              </button>
+            </div>
+
+            <div class="p-6 flex-1 flex flex-col justify-between space-y-5">
+              <div>
+                <span class="text-[11px] font-bold uppercase tracking-wider text-terracotta">${product.category}</span>
+                <h3 class="font-serif text-xl font-bold text-charcoal mt-1 group-hover:text-terracotta transition-colors">
+                  ${product.name}
+                </h3>
+                <p class="text-sm text-muted mt-2 line-clamp-2 leading-relaxed">
+                  ${product.description}
+                </p>
+              </div>
+
+              <div class="pt-4 border-t border-stone-200/80 space-y-3.5">
+                <div class="flex items-baseline justify-between">
+                  <div class="flex items-baseline gap-2">
+                    <span class="font-serif text-2xl font-bold text-charcoal">${formatPrice(product.price)}</span>
+                    ${product.oldPrice ? `<span class="text-xs text-muted line-through">${formatPrice(product.oldPrice)}</span>` : ''}
+                  </div>
+                  <span class="text-xs text-emerald-700 font-medium">En stock</span>
+                </div>
+
+                <div class="flex items-center gap-2.5">
+                  <div class="flex items-center bg-white border border-stone-200 rounded-xl p-1">
+                    <button 
+                      type="button"
+                      onclick="updateCardQty(${product.id}, -1)" 
+                      aria-label="Diminuer"
+                      class="w-8 h-8 rounded-lg flex items-center justify-center text-charcoal hover:bg-sand transition font-bold"
+                    >−</button>
+                    <span id="card-qty-${product.id}" class="w-8 text-center text-sm font-bold text-charcoal">${qty}</span>
+                    <button 
+                      type="button"
+                      onclick="updateCardQty(${product.id}, 1)" 
+                      aria-label="Augmenter"
+                      class="w-8 h-8 rounded-lg flex items-center justify-center text-charcoal hover:bg-sand transition font-bold"
+                    >+</button>
+                  </div>
+
+                  <button 
+                    type="button"
+                    onclick="addToCart(${product.id})"
+                    class="flex-1 py-2.5 px-4 rounded-xl bg-charcoal hover:bg-terracotta text-white font-semibold text-sm transition-colors flex items-center justify-center gap-2 shadow-2xs"
+                  >
+                    <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                    <span>Add to Cart</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    function filterByCategory(category) {
+      state.selectedCategory = category;
+      renderCategoryPills();
+      renderProducts();
+    }
+
+    function resetFilters() {
+      state.selectedCategory = "Tout voir";
+      state.searchQuery = "";
+      state.sortBy = "popular";
+      document.getElementById('catalog-search-input').value = "";
+      document.getElementById('header-search-input').value = "";
+      document.getElementById('mobile-search-input').value = "";
+      document.getElementById('sort-select').value = "popular";
+      renderCategoryPills();
+      renderProducts();
+    }
+
+    function syncSearchInputs(value) {
+      state.searchQuery = value;
+      document.getElementById('catalog-search-input').value = value;
+      document.getElementById('header-search-input').value = value;
+      document.getElementById('mobile-search-input').value = value;
+      renderProducts();
+    }
+
+    function updateCardQty(productId, delta) {
+      const current = state.cardQuantities[productId] || 1;
+      const next = Math.max(1, Math.min(20, current + delta));
+      state.cardQuantities[productId] = next;
+      const label = document.getElementById(`card-qty-${productId}`);
+      if (label) label.textContent = next;
+    }
+
+    function addToCart(productId, customQty = null) {
+      const product = PRODUCTS.find(p => p.id === productId);
+      if (!product) return;
+
+      const qtyToAdd = customQty !== null ? customQty : (state.cardQuantities[productId] || 1);
+      const existing = state.cart.find(item => item.id === productId);
+
+      if (existing) {
+        existing.quantity += qtyToAdd;
+      } else {
+        state.cart.push({ id: productId, quantity: qtyToAdd });
+      }
+
+      state.cardQuantities[productId] = 1;
+      const label = document.getElementById(`card-qty-${productId}`);
+      if (label) label.textContent = 1;
+
+      updateCartUI();
+      showToast(`${qtyToAdd} × ${product.name} added to cart`);
+    }
+
+    function updateCartItemQty(productId, delta) {
+      const idx = state.cart.findIndex(item => item.id === productId);
+      if (idx === -1) return;
+
+      state.cart[idx].quantity += delta;
+      if (state.cart[idx].quantity <= 0) {
+        state.cart.splice(idx, 1);
+      }
+      updateCartUI();
+    }
+
+    function removeCartItem(productId) {
+      state.cart = state.cart.filter(item => item.id !== productId);
+      updateCartUI();
+    }
+
+    function setDeliveryMode(mode) {
+      state.deliveryMode = mode;
+      const pickupBtn = document.getElementById('mode-pickup-btn');
+      const deliveryBtn = document.getElementById('mode-delivery-btn');
+      const addressField = document.getElementById('delivery-address-field');
+
+      if (mode === 'pickup') {
+        pickupBtn.className = "py-2 px-3 rounded-lg text-xs font-bold bg-white text-charcoal shadow-2xs transition flex items-center justify-center gap-1.5";
+        deliveryBtn.className = "py-2 px-3 rounded-lg text-xs font-semibold text-muted hover:text-charcoal transition flex items-center justify-center gap-1.5";
+        addressField.classList.add('hidden');
+      } else {
+        deliveryBtn.className = "py-2 px-3 rounded-lg text-xs font-bold bg-white text-charcoal shadow-2xs transition flex items-center justify-center gap-1.5";
+        pickupBtn.className = "py-2 px-3 rounded-lg text-xs font-semibold text-muted hover:text-charcoal transition flex items-center justify-center gap-1.5";
+        addressField.classList.remove('hidden');
+      }
+      updateCartUI();
+    }
+
+    function calculateTotals() {
+      const subtotal = state.cart.reduce((sum, item) => {
+        const product = PRODUCTS.find(p => p.id === item.id);
+        return sum + (product ? product.price * item.quantity : 0);
+      }, 0);
+
+      const freeThreshold = 25.00;
+      let shipping = 0;
+
+      if (state.deliveryMode === 'delivery' && subtotal > 0 && subtotal < freeThreshold) {
+        shipping = 3.90;
+      }
+
+      return {
+        subtotal,
+        shipping,
+        total: subtotal + shipping,
+        freeThreshold
+      };
+    }
+
+    function updateCartUI() {
+      const totalItems = state.cart.reduce((sum, item) => sum + item.quantity, 0);
+      
+      document.getElementById('cart-count-text').textContent = `(${totalItems})`;
+      document.getElementById('cart-badge').textContent = totalItems;
+      document.getElementById('drawer-item-count').textContent = totalItems;
+
+      const { subtotal, shipping, total, freeThreshold } = calculateTotals();
+      const progress = Math.min(100, (subtotal / freeThreshold) * 100);
+      const bar = document.getElementById('free-shipping-bar');
+      const msg = document.getElementById('free-shipping-msg');
+      
+      bar.style.width = `${progress}%`;
+      if (subtotal >= freeThreshold) {
+        msg.innerHTML = `<span class="text-emerald-700 font-bold">✦ Congratulations!</span> You qualify for <strong>free delivery</strong>.`;
+      } else {
+        const remaining = freeThreshold - subtotal;
+        msg.innerHTML = `Add <strong>${formatPrice(remaining)}</strong> more for free delivery!`;
+      }
+
+      const container = document.getElementById('cart-items-container');
+      const checkoutBtn = document.getElementById('checkout-btn');
+
+      if (state.cart.length === 0) {
+        checkoutBtn.disabled = true;
+        container.innerHTML = `
+          <div class="h-full flex flex-col items-center justify-center text-center py-12">
+            <div class="w-16 h-16 rounded-full bg-cream text-muted flex items-center justify-center mb-4">
+              <i data-lucide="shopping-bag" class="w-7 h-7"></i>
+            </div>
+            <h4 class="font-serif text-xl font-bold text-charcoal">Your cart is empty</h4>
+            <p class="text-sm text-muted mt-1.5 max-w-xs">
+              Explore our artisan breads and golden pastries to build your selection.
+            </p>
+            <button onclick="closeCart()" class="mt-6 px-6 py-2.5 rounded-full bg-charcoal text-white text-xs font-semibold hover:bg-stone-800 transition">
+              Explore Menu
+            </button>
+          </div>
+        `;
+      } else {
+        checkoutBtn.disabled = false;
+        container.innerHTML = state.cart.map(item => {
+          const product = PRODUCTS.find(p => p.id === item.id);
+          if (!product) return '';
+          return `
+            <div class="flex items-center gap-3.5 p-3 rounded-2xl bg-cream/80 border border-stone-200/70">
+              <img src="${product.image}" alt="${product.name}" class="w-16 h-16 rounded-xl object-cover shrink-0" />
+              <div class="flex-1 min-w-0">
+                <h4 class="font-serif text-sm font-bold text-charcoal truncate">${product.name}</h4>
+                <p class="text-xs text-terracotta font-semibold mt-0.5">${formatPrice(product.price)} / pc</p>
+                
+                <div class="flex items-center justify-between mt-2">
+                  <div class="inline-flex items-center bg-white border border-stone-200 rounded-lg">
+                    <button onclick="updateCartItemQty(${product.id}, -1)" class="w-6 h-6 text-xs font-bold hover:bg-sand rounded-l-lg">−</button>
+                    <span class="px-2.5 text-xs font-bold">${item.quantity}</span>
+                    <button onclick="updateCartItemQty(${product.id}, 1)" class="w-6 h-6 text-xs font-bold hover:bg-sand rounded-r-lg">+</button>
+                  </div>
+                  <span class="text-sm font-bold text-charcoal">${formatPrice(product.price * item.quantity)}</span>
+                </div>
+              </div>
+              <button onclick="removeCartItem(${product.id})" aria-label="Supprimer" class="p-1.5 text-stone-400 hover:text-red-600 transition self-start">
+                <i data-lucide="trash-2" class="w-4 h-4"></i>
+              </button>
+            </div>
+          `;
+        }).join('');
+      }
+
+      document.getElementById('cart-subtotal').textContent = formatPrice(subtotal);
+      const shippingLabel = document.getElementById('shipping-label');
+      const shippingVal = document.getElementById('cart-shipping');
+
+      if (state.deliveryMode === 'pickup') {
+        shippingLabel.textContent = "In-store pickup";
+        shippingVal.textContent = "Free";
+        shippingVal.className = "font-medium text-emerald-700";
+      } else {
+        shippingLabel.textContent = "Home delivery";
+        if (shipping === 0) {
+          shippingVal.textContent = "Free";
+          shippingVal.className = "font-medium text-emerald-700";
+        } else {
+          shippingVal.textContent = formatPrice(shipping);
+          shippingVal.className = "font-medium text-charcoal";
+        }
+      }
+
+      document.getElementById('cart-total').textContent = formatPrice(total);
+      document.getElementById('modal-total-amount').textContent = formatPrice(total);
+
+      lucide.createIcons();
+    }
+
+    function toggleFavorite(productId) {
+      const idx = state.favorites.indexOf(productId);
+      const product = PRODUCTS.find(p => p.id === productId);
+      if (idx === -1) {
+        state.favorites.push(productId);
+        if (product) showToast(`Added to favorites: ${product.name}`);
+      } else {
+        state.favorites.splice(idx, 1);
+        if (product) showToast(`Removed from favorites: ${product.name}`);
+      }
+      updateFavoritesUI();
+      renderProducts();
+    }
+
+    function updateFavoritesUI() {
+      const badge = document.getElementById('favorites-badge');
+      const count = state.favorites.length;
+      badge.textContent = count;
+      if (count > 0) {
+        badge.classList.remove('hidden');
+      } else {
+        badge.classList.add('hidden');
+      }
+
+      const list = document.getElementById('favorites-list');
+      if (count === 0) {
+        list.innerHTML = `
+          <div class="text-center py-8">
+            <p class="font-serif text-lg font-bold text-charcoal">No favorites saved</p>
+            <p class="text-sm text-muted mt-1">Click the heart on any product card to save it here.</p>
+          </div>
+        `;
+      } else {
+        list.innerHTML = state.favorites.map(id => {
+          const p = PRODUCTS.find(prod => prod.id === id);
+          if (!p) return '';
+          return `
+            <div class="flex items-center justify-between gap-3 p-3 rounded-2xl bg-cream border border-stone-200/80">
+              <div class="flex items-center gap-3 min-w-0">
+                <img src="${p.image}" alt="${p.name}" class="w-14 h-14 rounded-xl object-cover shrink-0" />
+                <div class="min-w-0">
+                  <h4 class="font-serif text-sm font-bold text-charcoal truncate">${p.name}</h4>
+                  <p class="text-xs font-semibold text-terracotta mt-0.5">${formatPrice(p.price)}</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2 shrink-0">
+                <button onclick="addToCart(${p.id}, 1); closeFavorites();" class="px-3.5 py-2 rounded-xl bg-charcoal text-white text-xs font-semibold hover:bg-terracotta transition">
+                  + Cart
+                </button>
+                <button onclick="toggleFavorite(${p.id})" aria-label="Retirer" class="p-2 text-stone-400 hover:text-red-600 transition">
+                  <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+      lucide.createIcons();
+    }
+
+    function openCart() {
+      document.getElementById('cart-drawer').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeCart() {
+      document.getElementById('cart-drawer').classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    function openFavorites() {
+      updateFavoritesUI();
+      document.getElementById('favorites-modal').classList.remove('hidden');
+    }
+
+    function closeFavorites() {
+      document.getElementById('favorites-modal').classList.add('hidden');
+    }
+
+    function openCheckoutModal() {
+      closeCart();
+      document.getElementById('checkout-form-step').classList.remove('hidden');
+      document.getElementById('checkout-success-step').classList.add('hidden');
+      document.getElementById('checkout-modal').classList.remove('hidden');
+    }
+
+    function closeCheckoutModal() {
+      document.getElementById('checkout-modal').classList.add('hidden');
+    }
+
+    function finishOrderAndReset() {
+      state.cart = [];
+      updateCartUI();
+      closeCheckoutModal();
+    }
+
+    function showToast(message) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = "pointer-events-auto bg-charcoal text-cream px-4 py-3 rounded-2xl shadow-float border border-gold/30 flex items-center gap-3 text-xs sm:text-sm font-medium animate-slide-up";
+      toast.innerHTML = `
+        <span class="w-2 h-2 rounded-full bg-gold shrink-0"></span>
+        <span>${message}</span>
+      `;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(8px)';
+        toast.style.transition = 'all 0.25s ease';
+        setTimeout(() => toast.remove(), 250);
+      }, 2800);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderCategoryPills();
+      renderProducts();
+      updateCartUI();
+      updateFavoritesUI();
+      lucide.createIcons();
+
+      document.getElementById('open-cart-btn').addEventListener('click', openCart);
+      document.getElementById('open-favorites-btn').addEventListener('click', openFavorites);
+
+      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+      document.querySelectorAll('.mobile-nav-link').forEach(link => {
+        link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+      });
+
+      ['header-search-input', 'mobile-search-input', 'catalog-search-input'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.addEventListener('input', (e) => {
+            syncSearchInputs(e.target.value);
+            if (id === 'header-search-input' && e.target.value.trim().length > 0) {
+              const catalogEl = document.getElementById('catalogue');
+              if (window.scrollY < catalogEl.offsetTop - 200) {
+                catalogEl.scrollIntoView({ behavior: 'smooth' });
+              }
+            }
+          });
+        }
+      });
+
+      document.getElementById('sort-select').addEventListener('change', (e) => {
+        state.sortBy = e.target.value;
+        renderProducts();
+      });
+
+      document.getElementById('newsletter-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const emailInput = document.getElementById('newsletter-email');
+        if (emailInput.value.trim()) {
+          document.getElementById('newsletter-feedback').classList.remove('hidden');
+          emailInput.value = '';
+          lucide.createIcons();
+        }
+      });
+
+      document.getElementById('checkout-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('customer-name').value.trim();
+        const slot = document.getElementById('pickup-slot').value;
+        const modeText = state.deliveryMode === 'pickup' ? 'in-store pickup' : 'home delivery';
+
+        document.getElementById('confirmation-details').innerHTML = `
+          Thank you <strong>${name}</strong>! Your order for <strong>${modeText}</strong> is confirmed for slot: <span class="text-charcoal font-semibold">${slot}</span>.
+        `;
+        document.getElementById('checkout-form-step').classList.add('hidden');
+        document.getElementById('checkout-success-step').classList.remove('hidden');
+        lucide.createIcons();
+      });
+    });
+  </script>
+</body>
+</html>
